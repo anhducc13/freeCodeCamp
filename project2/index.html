@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+    body{
+        background-color: #A9D7D1;
+        width: 100%;
+        min-height: 500px;
+    }
+    #title{
+        text-align: center;
+        margin-top: 80px;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+    #wrapper{
+        width: 70%;
+        margin: 20px auto;
+        border-radius: 10px;
+        min-height: 200px;
+        background-color: #ffff;
+    }
+    #description{
+        text-align: center;
+        padding: 20px;
+        font-size: 20px;
+    }
+    #row{
+        width: 70%;
+        margin: auto;
+        text-align: center;
+    }
+    .right-Tab .input-w300{
+        border-radius: 2px;
+        border: 1px solid #c0c0c0;
+        width: 300px;
+        height: 20px;
+        padding: 5px;
+        margin: 10px;
+    }
+    .label{
+        display: inline-block;
+        text-align: right;
+        width: 40%;
+        font-size: 18px;
+        vertical-align: top;
+        padding: 8px;
+    }
+    .label span{
+        color: red;
+    }
+    .right-Tab{
+        display: inline-block;
+        vertical-align: middle;
+        width: 50%;
+    }
+
+    .select-box{
+        padding: 5px;
+        margin: 10px;
+        width: 150px;
+        height: 35px;
+    }
+    .right-Tab ul{
+        list-style: none;
+        margin: 10px;
+    }
+    .right-Tab ul span{
+        margin: 10px;
+    }
+    .right-Tab #preferences li{
+        padding-bottom: 10px;
+    }
+    #preferences{
+        /* height: 200px; */
+    }
+
+    #comments{
+        border-radius: 2px;
+        border: 1px solid #c0c0c0;
+        width: 300px;
+        padding: 5px;
+        margin: 10px;
+    }
+    #submit{
+        background-color: #218838;
+        color: #ffffff;
+        border-radius: 5px;
+        height: 40px;
+        width: 100px;
+        margin: 10px auto;
+        text-align: center;
+        margin-left: 40%;
+        font-size: 18px;
+    }
+</style>
+<body>
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+   <h1 id="title">Survey Form</h1>
+    <div id="wrapper">
+        <p id="description">
+            Let us know how we can improve freeCodeCamp
+        </p>
+        <form action="#" id="survey-form" name="survey-form">
+            <div id="rowTab">
+                <div class="label">
+                    <label id="name-label" ><span>*</span>Name</label>                    
+                </div>
+                <div class="right-Tab">
+                    <input type="text" class="input-w300" name="name" id="name" placeholder="Enter your name" required>
+                </div>
+            </div>
+            <div id="rowTab">
+                <div class="label">
+                    <label id="email-label"><span>*</span>Email</label>                    
+                </div>
+                <div class="right-Tab">
+                    <input type="email" class="input-w300" name="name" id="email" placeholder="Enter your email" required>
+                </div>
+            </div>
+            <div id="rowTab">
+                <div class="label">
+                    <label id="number-label"><span>*</span>Age</label>                    
+                </div>
+                <div class="right-Tab">
+                    <input type="number" class="input-w300" name="name" id="number" min="1" max="60" placeholder="Age" required>
+                </div>
+            </div> 
+            <div id="rowTab">
+                    <div class="label">
+                        <label id="number-label">Which option best describes your current role?</label>                    
+                    </div>
+                    <div class="right-Tab">
+                        <select class="select-box" name="currentPos" id="dropdown">
+                                <option disabled="" value="">Select an option</option>
+                                <option value="student">Student</option>
+                                <option value="job">Full Time Job</option>
+                                <option value="learner">Full Time Learner</option>
+                                <option value="preferNo">Prefer not to say</option>
+                                <option value="other">Other</option>
+                        </select>
+                    </div>
+            </div>
+            <div id="rowTab">
+                    <div class="label">
+                        <label id="number-label">How likely is that you would recommend freeCodeCamp to a friend?</label>                    
+                    </div>
+                    <div class="right-Tab" >
+                        <ul id="preferences"> 
+                            <li><input class="checkbox" type="radio" name="radio-buttons" value="0"><span>Definitely</span></li>
+                            <li><input class="checkbox" type="radio" name="radio-buttons" value="2"><span>Maybe</span></li>
+                            <li><input class="checkbox" type="radio" name="radio-buttons" value="3"><span>Not sure</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="rowTab">
+                        <div class="label">
+                            <label id="number-label">What do you like most in FCC: </label>                    
+                        </div>
+                        <div class="right-Tab">
+                            <select class="select-box" name="mostLike" id="dropdown">
+                                    <option disabled="" value="">Select an option</option>
+                                    <option value="student">Challenges</option>
+                                    <option value="job">Projects</option>
+                                    <option value="learner">Community</option>
+                            </select>
+                        </div>
+                </div>
+            <div id="rowTab">
+                    <div class="label">
+                        <label id="number-label">How likely is that you would recommend freeCodeCamp to a friend?</label>                    
+                    </div>
+                    <div class="right-Tab" >
+                        <ul id="preferences"> 
+                            <li><input class="checkbox" type="checkbox" name="prefer" value="0"><span>Front-end Projects</span></li>
+                            <li><input class="checkbox" type="checkbox" name="prefer" value="2"><span>Back-end Projects</span></li>
+                            <li><input class="checkbox" type="checkbox" name="prefer" value="3"><span>Data Visualization</span></li>
+                            <li><input class="checkbox" type="checkbox" name="prefer"  value="4"><span>Challenges</span></li>
+                            <li><input name="prefer" value="5" type="checkbox" class="checkbox"><span>Open Source Community</span></li>
+                            <li><input class="checkbox" type="checkbox" name="prefer"  value="6"><span>Videos</span></li>
+                            <li><input class="checkbox" type="checkbox" name="prefer"  value="7"><span>City Meetups</span></li>
+                            <li><input class="checkbox" type="checkbox" name="prefer"  value="8"><span>Wiki</span></li>
+                            <li><input class="checkbox" type="checkbox" name="prefer"  value="9"><span>Forum</span></li>
+                            <li><input class="checkbox" type="checkbox" name="prefer"  value="10"><span>Additional Courses</span></li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div id="rowTab">
+                        <div class="label">
+                            <label id="number-label">Any Comments or Suggestions?</label>                    
+                        </div>
+                        <div class="right-Tab">
+                                <textarea id="comments" class="input-field" style="height:50px;resize:vertical;" name="comment" placeholder="Enter your comment here..."></textarea>
+                        </div>
+                    </div> 
+                    <button type="submit" id="submit">Submit</button>              
+        </form>
+    </div>
+</body>
+</html>

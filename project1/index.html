@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+    body{
+        font-family: 'Times New Roman', Times, serif;
+    }
+    #main{
+        margin: 20px auto;
+        width: 90%;
+        background-color: #eeeeee;
+        border-radius: 10px;
+    }
+    #main #header #title{
+        text-align: center;
+    }
+    #main #header #title h1{
+        padding: 40px;
+    }
+    #main #header #title div{
+        text-align: center;
+        width: 80%;
+        margin: 0px auto;
+        font-size: 18px;
+    }
+    #main #header #img-div{
+        background-color: #f9f9f9;
+        width: 95%;
+        margin: 0px auto;
+        text-align: center;
+        margin-top: 20px;
+        padding: 20px;
+    }
+    #main #header #img-caption{
+        font-size: 18px;
+    }
+    #image{
+        max-width: 100%;
+        display: block;
+        width: auto;
+        height: auto;
+    }
+    #tribute-info{
+        margin: 20px auto;
+        width: 70%;
+        list-style: inside;
+    }
+    #tribute-info ul h2{
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    #tribute-info ul li{
+        margin-bottom: 20px;
+        text-align: justify;
+        font-size: 18px;
+    }
+    #tribute-info span{
+        font-weight: bold;
+        font-size: 16px;
+    }
+    #footer{
+        margin: 20px auto;
+        width: 90%;
+    }
+    #footer h3{
+        text-align: center;
+        margin-top: 20px;
+    }
+    @media (min-width: 1000px){
+        #image1{
+            float: left;
+            width: 48%;
+            height: 400px;
+            margin: 10px;
+        }
+        #image2{
+            width: 48%;
+            height: 400px;
+            margin: 10px;
+        }
+    }
+    @media (max-width: 1000px){
+        h1{
+            color: red;
+        }
+        #image-footer img{
+            width: 100%;
+            height: 100%;
+            margin-bottom: 10px;
+            height: 200px;  
+        }
+
+    }
+    .clr{
+        clear: both;
+    }
+</style>
+<body>
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+    <div id="main">
+        <div id="header">
+            <div id="title">
+                <h1>VỊNH HẠ LONG</h1>
+                <div>Halong Bay is a beautiful natural wonder in northern Vietnam near the Chinese border.
+                    The Bay is dotted with 1,600 limestone islands and islets and covers an area of over 1,500 sqkm.
+                     This extraordinary area was declared a UNESCO World Heritage Site in 1994</div>
+            </div>
+            <div id="img-div">
+                <img id="image" src="images/image.jpg" alt="">
+                <div id="img-caption">Ha Long Bay has been called by the great national poet Nguyen Trai: "a marvel of the earth erected towards the high skies"</div>
+            </div>
+        </div>
+        <div id="tribute-info">
+            <ul> <h2>Islands of Ha Long Bay</h2>
+                <li><span>Ban Sen</span>, a thickly forested, almost uninhabited island reachable by ferries to Quan Lan from Cai Rong.</li>
+                <li><span>Cat Ba</span>, the home of the endangered cat: Ba langur, a national park, numerous caves and the most popular destination in Ha Long Bay for tourists.</li>
+                <li><span>Quan Lạn</span>, a historically significant outlying island with the beginnings of some tourism infrastructure and some beautiful beaches. Reachable by ferry from Cai Rong or also (reportedly) from Halong City.</li>
+                <li><span>Van Don</span>, a large island that is well inhabited, little visited by tourists and connected by road to the mainland near Cửa Ông.</li>
+                <li><span>Dau Be Island</span>: Visited by commercial cruises to Cat Ba. This is a very popular swimming and diving spot because of its rich coral and deep grottoes with three inland lakes. The grottoes and caves can only be visited by rowing boat at low tide, when access is possible.</li>
+                <li><span>Dau Go Island</span>: Visited by commercial cruises to Cat Ba. A large and heavily damaged cave plastered with multicoloured lights and concrete.</li>
+            </ul>
+        </div>
+        <div id="footer">
+            <div id="image-footer">
+                    <img id="image1" src="images/img1.jpg" alt="">
+                    <img id="image2" src="images/img2.jpg" alt="">
+            </div>
+            <div class="clr"></div>
+            <h3>
+                If you have time, you should read more about this incredible human being on his
+                <a id="tribute-link" href="https://wikitravel.org/en/Ha_Long_Bay" target="_blank">Wikipedia entry.</a>
+            </h3>
+        </div>
+    </div>
+</body>
+</html>
