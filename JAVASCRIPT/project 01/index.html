@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function palindrome(str) {
+            var myRe = new RegExp("[^A-Za-z0-9]","i");
+            for (var i = 0; i < str.length; i++) {
+                if (myRe.test(str[i] )) {
+                    str = str.replace(str[i],'');
+                    i--;
+                }
+            }
+            str = str.toLowerCase();
+            var strSplit = str.split("");
+            var reverse = strSplit.reverse();
+            return reverse.join("") == str;
+        }
+        console.log(palindrome("A man, a plan, a canal. Panama"));
+    </script>
+</body>
+
+</html>

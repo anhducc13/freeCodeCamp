@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function rot13(str) { // LBH QVQ VG!
+        var temp = "";
+            for(var i = 0; i < str.length ; i++){
+                if(str[i] == ' ' || str[i] == '.' || str[i] == '?' || str[i] == '!'  ){
+                    temp += str[i];
+                }else {
+                    if(str.charCodeAt(i) - 13 < 64){
+                        temp  += String.fromCharCode(str.charCodeAt(i) + 13);
+                    } else if(str[i] == 'M'){
+                        temp += "Z";
+                    } else {
+                        temp  += String.fromCharCode(str.charCodeAt(i) - 13);
+                    }
+                }
+            }
+            return temp;
+        }
+
+        // Change the inputs below to test
+
+        console.log(rot13("GUR DHVPX OEBJA SBK WHZCF BIRE GUR YNML QBT."));
+        
+    </script>
+</body>
+
+</html>

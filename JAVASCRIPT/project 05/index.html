@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function checkCashRegister(price, cash, cid) {
+            var change = (cash - price).toFixed(2);
+            var beforeDecimal = parseInt(change.toString().split(".")[0]);
+            var afterDecimal = parseInt(change.toString().split(".")[1]) / 100;
+            var Array1 = [cid[8][1], cid[7][1], cid[6][1], cid[5][1], cid[4][1]];
+            var Array2 = [cid[3][1], cid[2][1], cid[1][1], cid[0][1]];
+
+            var ArrayChange1 = [["ONE HUNDRED", 0], ["TWENTY", 0], ["TEN", 0], ["FIVE", 0], ["ONE", 0]];
+            var ArrayChange2 = [["QUARTER", 0], ["DIME", 0], ["NICKEL", 0], ["PENNY", 0]];
+
+            var ArrayChangeNew1 = [["ONE HUNDRED", 0], ["TWENTY", 0], ["TEN", 0], ["FIVE", 0], ["ONE", 0]];
+            var ArrayChangeNew2 = [["QUARTER", 0], ["DIME", 0], ["NICKEL", 0], ["PENNY", 0]];
+
+            let changeFactor = 0;
+            let index = 0;
+
+            let temp1 = 0;
+            let temp2 = 0;
+            for (var k = 0; k < Array1.length; k++) {
+                temp1 += Array1[k];
+                for (var k = 0; k < Array2.length; k++) {
+                    temp2 += Array2[k];
+                }
+            }
+            if ((beforeDecimal > temp1) || (afterDecimal > temp2)) {
+                return { status: "INSUFFICIENT_FUNDS", change: [] };
+            }
+            while (beforeDecimal > 0) {
+                if ((beforeDecimal >= 100) && (Array1[0] >= 100)) {
+                    changeFactor = 100;
+                    index = 0;
+                } else if ((beforeDecimal >= 20) && (Array1[1] >= 20)) {
+                    changeFactor = 20;
+                    index = 1;
+                } else if ((beforeDecimal >= 10) && (Array1[2] >= 10)) {
+                    changeFactor = 10;
+                    index = 2;
+                } else if ((beforeDecimal >= 5) && (Array1[3] >= 5)) {
+                    changeFactor = 5;
+                    index = 3;
+                } else if ((beforeDecimal >= 1) && (Array1[4] >= 1)) {
+                    changeFactor = 1;
+                    index = 4;
+                } 
+
+                // update my bDecimal (Integer change)
+                beforeDecimal = beforeDecimal - changeFactor;
+                // update my cash register machine
+                Array1[index] = Array1[index] - changeFactor;
+                // update how MANY of this money i used
+                ArrayChange1[index][1] = ArrayChange1[index][1] + 1;
+                //use the precedent value to calcul how MUCH of this money i used
+                ArrayChangeNew1[index][1] = ArrayChange1[index][1] * changeFactor;
+            }
+
+            //reset
+            changeFactor = 0;
+            index = 0;
+
+
+            /*
+            WORK ON FRACTIONAL VALUES
+            While my change is not ZERO and my cash register machin is not EMPTY
+            I continue to check for every values possibles
+            I update my cash register and my change
+            */
+            while (afterDecimal > 0) {
+                if ((afterDecimal >= 0.25) && (Array2[0] >= 0.25)) {
+                    changeFactor = 0.25;
+                    index = 0;
+                } else if ((afterDecimal >= 0.10) && (Array2[1] >= 0.10)) {
+                    changeFactor = 0.10;
+                    index = 1;
+                } else if ((afterDecimal >= 0.05) && (Array2[2] >= 0.05)) {
+                    changeFactor = 0.05;
+                    index = 2;
+                } else if ((afterDecimal >= 0.01) && (Array2[3] >= 0.01)) {
+                    changeFactor = 0.01;
+                    index = 3;
+                } 
+
+                //update my bDecimal (Fractional change)
+                afterDecimal = afterDecimal - changeFactor;
+
+                //update my cash register machine (use parseFloat and toFixed to manage float Calcul)
+                var valueFixed = parseFloat(Array2[index] - changeFactor).toFixed(2);
+                Array2[index] = parseFloat(valueFixed);
+
+                // update how MANY of this money i used
+                ArrayChange2[index][1] = ArrayChange2[index][1] + 1;
+
+                //Find how MUCH of this money i used (use parseFloat and toFixed to manage float Calcul)
+                let valueFixed2 = (ArrayChange2[index][1] * changeFactor).toFixed(2);
+                ArrayChangeNew2[index][1] = parseFloat(valueFixed2);
+
+            }
+
+            //concat my Integer and Fractional value from my cash register
+            var Array3 = Array1.concat(Array2);
+
+            //delet empty value to check if cash register machin is empty or not later on
+            Array3 = Array3.filter(function (x) {
+                return (x !== 0);
+            });
+
+            //Concat my two array into one
+            var ArrayChangeNew3 = ArrayChangeNew1.concat(ArrayChangeNew2);
+
+            //Then EMPTY "0" values
+            for (let k = 0; k < ArrayChangeNew3.length; k++) {
+                if (ArrayChangeNew3[k][1] == 0) {
+                    ArrayChangeNew3[k].splice(0, 1);
+                    delete ArrayChangeNew3[k];
+                }
+            }
+            //Then REMOVE "empty" values
+            ArrayChangeNew3 = ArrayChangeNew3.filter(function (x) {
+                return (x !== (undefined || null || ''));
+            });
+
+            //Handle if my register machin is empty or not
+            if (Array3.length == 0) {
+                return { status: "CLOSED", change: cid };
+            } else {
+                return { status: "OPEN", change: ArrayChangeNew3 };
+            }
+        }
+
+        // Example cash-in-drawer array:
+        // [["PENNY", 1.01],
+        // ["NICKEL", 2.05],
+        // ["DIME", 3.1],
+        // ["QUARTER", 4.25],
+        // ["ONE", 90],
+        // ["FIVE", 55],
+        // ["TEN", 20],
+        // ["TWENTY", 60],
+        // ["ONE HUNDRED", 100]]
+
+        console.log(checkCashRegister(19.5, 20, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]));
+    </script>
+</body>
+
+</html>
