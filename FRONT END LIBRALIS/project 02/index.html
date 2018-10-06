@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<style>
+    *{
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: #87b5b5;
+            margin: 10px 0;
+        }
+        .editorWrap {
+            width: 600px;
+            margin: 18px auto;
+        }
+        .editorWrap .toolbar {
+            width: 99%;
+        }
+        .toolbar {
+            position: relative;
+            background-color: #4aa3a3;
+            padding: 4px 4px 3px 3px;
+            border: 1px solid #1d2f2f;
+            box-shadow: 1px 1px 10px 2px #3a5f5f;
+            font-family: Russo One;
+            font-size: 15px;
+        }
+        .editorWrap textarea {
+            width: 99%;
+            min-height: 200px;
+            margin-bottom: -5px;
+            resize: vertical;
+            outline: none;
+            padding-left: 5px;
+            padding-top: 5px;
+            font-size: 12px;
+        }
+        .converter {
+            width: 100px;
+            text-align: center;
+            font-size: 35px;
+            margin: auto;
+        }
+        .previewWrap {
+            width: 800px;
+            margin: 20px auto;
+            min-height: 200px;
+            overflow-wrap: break-word;
+            padding-right: 20px;
+        }
+        .previewWrap .toolbar {
+            left: -1px;
+            width: 100%;
+            padding-right: 17px;
+        }
+        #preview h1 {
+            border-bottom: 2px solid #224B4B;
+        }
+        h1 {
+            display: block;
+            font-size: 2em;
+            margin-block-start: 0.67em;
+            margin-block-end: 0.67em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            font-weight: bold;
+        }
+    #preview h2 {
+        border-bottom: 1px solid #224B4B;
+    }
+    h2 {
+        display: block;
+        font-size: 1.5em;
+        margin-block-start: 0.83em;
+        margin-block-end: 0.83em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+        font-weight: bold;
+    }
+    h3 {
+        display: block;
+        font-size: 1.17em;
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+        font-weight: bold;
+    }
+    p {
+        display: block;
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+    }
+    #preview code {
+        background: white;
+        padding: 1px 4px 2px 4px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    #preview pre {
+        background: white;
+        padding: 5px 0 5px 5px;
+    }
+    pre, xmp, plaintext, listing {
+        display: block;
+        font-family: monospace;
+        white-space: pre;
+        margin: 1em 0px;
+    }
+    #preview blockquote {
+        border-left: 3px solid #224B4B;
+        color: #224B4B;
+        padding-left: 5px;
+        margin-left: 25px;
+    }
+    #preview table {
+        border-collapse: collapse;
+    }
+    table {
+        display: table;
+        border-collapse: separate;
+        border-spacing: 2px;
+        border-color: grey;
+    }
+    thead {
+        display: table-header-group;
+        vertical-align: middle;
+        border-color: inherit;
+    }
+    tr {
+        display: table-row;
+        vertical-align: inherit;
+        border-color: inherit;
+    }
+    #preview td, #preview th {
+    border: 2px solid #224B4B;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+td, th {
+    display: table-cell;
+    vertical-align: inherit;
+}
+ul, menu, dir {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+ol {
+    display: block;
+    list-style-type: decimal;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+.colorScheme, .editorWrap textarea, .previewWrap {
+    background-color: #c0d8d8;
+    border: 1px solid #1d2f2f;
+    box-shadow: 1px 1px 10px 2px #3a5f5f;
+    border-top: none;
+}
+.toolbar .fa-arrows-alt, .toolbar .fa-compress {
+    position: absolute;
+    right: 5px;
+}
+    </style>
+
+<body>
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+    <div id="app">
+        <div data-reactroot="">
+            <div class="editorWrap">
+                <div class="toolbar"><i title="no-stack-dub-sack" class="fa fa-free-code-camp"></i><!-- react-text: 5 -->Editor
+                    <!-- /react-text --><i class="fa fa-arrows-alt"></i></div><textarea id="editor" type="text" style="margin-top: 0px; margin-bottom: -5px; height: 271px;"># Welcome to my React Markdown Previewer!
+
+                ## This is a sub-heading...
+                ### And here's some other cool stuff:
+                  
+                Heres some code, `&lt;div&gt;&lt;/div&gt;`, between 2 backticks.
+                ```
+                // this is multi-line code:
+                
+                function anotherExample(firstLine, lastLine) {
+                  if (firstLine == '```' &amp;&amp; lastLine == '```') {
+                    return multiLineCode;
+                  }
+                }
+                ```
+                  
+                You can also make text **bold**... whoa!
+                Or _italic_.
+                Or... wait for it... **_both!_**
+                And feel free to go crazy ~~crossing stuff out~~.
+                
+                There's also [links](https://www.freecodecamp.com), and
+                &gt; Block Quotes!
+                
+                And if you want to get really crazy, even tables:
+                
+                Wild Header | Crazy Header | Another Header?
+                ------------ | ------------- | ------------- 
+                Your content can | be here, and it | can be here....
+                And here. | Okay. | I think we get it.
+                
+                - And of course there are lists.
+                  - Some are bulleted.
+                     - With different indentation levels.
+                        - That look like this.
+                
+                
+                1. And there are numbererd lists too.
+                1. Use just 1s if you want! 
+                1. But the list goes on...
+                - Even if you use dashes or asterisks.
+                * And last but not least, let's not forget embedded images:
+                
+                ![React Logo w/ Text](https://goo.gl/Umyytc)
+                </textarea>
+            </div>
+            <div class="converter"></div>
+            <div class="previewWrap">
+                <div class="toolbar"><i title="no-stack-dub-sack" class="fa fa-free-code-camp"></i><!-- react-text: 12 -->Previewer
+                    <!-- /react-text --><i class="fa fa-arrows-alt"></i></div>
+                <div id="preview">
+                    <h1 id="welcome-to-my-react-markdown-previewer-">Welcome to my React Markdown Previewer!</h1>
+                    <h2 id="this-is-a-sub-heading-">This is a sub-heading...</h2>
+                    <h3 id="and-here-s-some-other-cool-stuff-">And here's some other cool stuff:</h3>
+                    <p>Heres some code, <code>&lt;div&gt;&lt;/div&gt;</code>, between 2 backticks.</p>
+                    <pre><code>// this is multi-line code:
+                
+                function anotherExample(firstLine, lastLine) {
+                  if (firstLine == '```' &amp;&amp; lastLine == '```') {
+                    return multiLineCode;
+                  }
+                }
+                </code></pre>
+                    <p>You can also make text <strong>bold</strong>... whoa!<br>Or <em>italic</em>.<br>Or... wait for
+                        it... <strong><em>both!</em></strong><br>And feel free to go crazy <del>crossing stuff out</del>.</p>
+                    <p>There's also <a target="_blank" href="https://www.freecodecamp.com">links</a>, and</p>
+                    <blockquote>
+                        <p>Block Quotes!</p>
+                    </blockquote>
+                    <p>And if you want to get really crazy, even tables:</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Wild Header</th>
+                                <th>Crazy Header</th>
+                                <th>Another Header?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Your content can</td>
+                                <td>be here, and it</td>
+                                <td>can be here....</td>
+                            </tr>
+                            <tr>
+                                <td>And here.</td>
+                                <td>Okay.</td>
+                                <td>I think we get it.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <ul>
+                        <li>And of course there are lists.<ul>
+                                <li>Some are bulleted.<ul>
+                                        <li>With different indentation levels.<ul>
+                                                <li>That look like this.</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ol>
+                        <li>And there are numbererd lists too.</li>
+                        <li>Use just 1s if you want! </li>
+                        <li>But the list goes on...</li>
+                        <li>Even if you use dashes or asterisks.</li>
+                        <li>And last but not least, let's not forget embedded images:</li>
+                    </ol>
+                    <p><img src="https://goo.gl/Umyytc" alt="React Logo w/ Text"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+            // !! IMPORTANT README:
+            window.onload = function(e){
+                window.addEventListener("load", updateValue);
+     
+     function updateValue() { 
+       let value = document.getElementById("editor").value;
+       document.getElementById("preview").innerHTML = m;
+     console.log(value)
+                            }
+     
+     let editor = document.getElementById("editor");
+     editor.addEventListener("input", updateValue);
+            };
+     
+     </script>
+</body>
+
+</html>

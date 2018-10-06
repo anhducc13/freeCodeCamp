@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous" />
+    <script src="jquery-1.10.0.min.js"></script>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        vertical-align: baseline;
+    }
+
+    body {
+        background-color: #333;
+        color: #333;
+        font-family: 'Raleway', sans-serif;
+        font-weight: 400;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    #quote-box {
+        border-radius: 3px;
+        position: relative;
+        width: 450px;
+        padding: 40px 50px;
+        display: table;
+        background-color: #fff;
+    }
+
+    #quote-box .quote-text {
+        text-align: center;
+        width: 450px;
+        height: auto;
+        clear: both;
+        font-weight: 500;
+        font-size: 1.75em;
+    }
+
+    #quote-box .quote-text i {
+        font-size: 1.0em;
+        margin-right: 0.4em;
+    }
+
+    #quote-box .quote-author {
+        width: 450px;
+        height: auto;
+        clear: both;
+        padding-top: 20px;
+        font-size: 1em;
+        text-align: right;
+    }
+
+    #quote-box .buttons {
+        width: 450px;
+        margin: auto;
+        display: block;
+    }
+
+    #quote-box .buttons .button {
+        height: 38px;
+        border: none;
+        border-radius: 3px;
+        color: #fff;
+        background-color: #333;
+        font-size: 0.85em;
+        padding: 8px 18px 6px 18px;
+        margin-top: 30px;
+        opacity: 1;
+        cursor: pointer;
+    }
+
+    #quote-box .buttons .button#tweet-quote,
+    #quote-box .buttons .button#tumblr-quote {
+        float: left;
+        text-align: center;
+        font-size: 1.2em;
+        margin-right: 5px;
+        padding: 5px;
+        width: 40px;
+    }
+
+    #new-quote {
+        margin-left: 266px;
+    }
+</style>
+<script>
+    var colors = ['#16a085', '#27ae60', '#2c3e50', '#f39c12', '#e74c3c', '#9b59b6', '#FB6964', '#342224', "#472E32", "#BDBB99", "#77B1A9", "#73A857"];
+
+    var quotes = [["In the end, it's not going to matter how many breaths you took, but how many moments took your breath away.", "-shing xiong"], ["When life gives you a hundred reasons to cry, show life that you have a thousand reasons to smile.", "-Unkownn"], ["Never tell your problems to anyone...20% don't care and the other 80% are glad you have them.", "-Lou Holtz"], ["Be who you are and say what you feel because those who mind don't matter and those who matter don't mind.", "-Unkown"], ["I always knew looking back on the tears would make me laugh, but I never knew looking back on the laughs would make me cry.", "-Unkownn"], ["Advice is what we ask for when we already know the answer but wish we didn't.", "- Erica Jong"], ["Work like you don't need the money, love like you have never been hurt and dance like no one iswatching.", "-Randall G Leighton"], ["Everything we see in the world is the creative work of women.", "-M.Kemal ATATÜRK"], ["Peace at Home, Peace in the World", "-Mustafa Kemal Atatürk"]]
+
+    function changeQuote() {
+        var a = getRndInteger(0, 11);
+        var b = getRndInteger(0, 8);
+        
+        $(".quote-text").fadeOut();
+        $("#text").text(quotes[b][0]);
+        document.getElementById("author").innerHTML = quotes[b][1];
+        document.getElementById("body").style.backgroundColor = colors[a];
+        document.getElementById("tweet-quote").style.backgroundColor = colors[a];
+        document.getElementById("new-quote").style.backgroundColor =   colors[a];
+        document.getElementById("tumblr-quote").style.backgroundColor =   colors[a];
+        $(".quote-text").fadeIn();
+
+    }
+    function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+</script>
+
+<body id="body">
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+    <div id="page-wrapper">
+        <div id="quote-box">
+            <div class="quote-text" style="opacity: 1;">
+                <i class="fa fa-quote-left"> </i>
+                <span id="text">A truly rich man is one whose children run into his arms when his hands are empty.</span>
+            </div>
+            <div class="quote-author" style="opacity: 1;">
+                <span id="author">Unknown</span>
+            </div>
+            <div class="buttons">
+                <a class="button" id="tweet-quote" title="Tweet this quote!" target="_blank" href="https://twitter.com/intent/tweet?hashtags=quotes&amp;related=freecodecamp&amp;text=%22A%20truly%20rich%20man%20is%20one%20whose%20children%20run%20into%20his%20arms%20when%20his%20hands%20are%20empty.%22%20Unknown"
+                    style="background-color: rgb(44, 62, 80);">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                <a class="button" id="tumblr-quote" title="Post this quote on tumblr!" target="_blank" href="https://www.tumblr.com/widgets/share/tool?posttype=quote&amp;tags=quotes,freecodecamp&amp;caption=Unknown&amp;content=A%20truly%20rich%20man%20is%20one%20whose%20children%20run%20into%20his%20arms%20when%20his%20hands%20are%20empty.&amp;canonicalUrl=https%3A%2F%2Fwww.tumblr.com%2Fbuttons&amp;shareSource=tumblr_share_button"
+                    style="background-color: rgb(44, 62, 80);">
+                    <i class="fa fa-tumblr"></i>
+                </a>
+                <button class="button btn btn-default" onclick="setTimeout(changeQuote, 0);" id="new-quote">New quote</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

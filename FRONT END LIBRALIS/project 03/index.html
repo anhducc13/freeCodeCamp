@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,400,400italic,700,700italic' rel='stylesheet'>
+    <script src="jquery-1.10.0.min.js"></script>
+</head>
+<style>
+    body {
+        background: #c2c2d6;
+        -webkit-touch-callout: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+        cursor: default;
+        display: block;
+        margin: 8px;
+        
+    }
+    #app {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .calculator {
+        border: 2px solid #47476b;
+        padding: 5px;
+        background: black;
+        width: 320px;
+        position: relative;
+    }
+    .formulaScreen {
+        min-height: 20px;
+        font-family: digital;
+        font-size: 20px;
+        color: orange;
+        text-align: right;
+        vertical-align: text-top;
+        line-height: 20px;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+    }
+    .outputScreen {
+        font-size: 29px;
+        font-family: 'digital';
+        color: white;
+        text-align: right;
+        line-height: 35px;
+    }
+    .jumbo {
+        width: 160px;
+    }
+    button {
+        position: relative;
+        height: 65px;
+        width: 80px;
+        color: white;
+        outline: 1px solid black;
+        border: none;
+        background: #4d4d4d;
+        font-family: Share Tech Mono, monospace;
+        font-size: 20px;
+        cursor: default;
+    }
+    .author {
+        text-align: center;
+        font-family: Share Tech Mono, sans;
+        margin-top: 15px;
+    }
+    .author a {
+        text-decoration: none;
+        color: #00264d;
+        line-height: 26px;
+    }
+</style>
+<script>
+    $(document).ready(function(){
+        $("button").mouseenter(function(){
+            $(this).css({"border-color": "while", 
+                        "border-width":"1px",
+                        "border-style":"groove"});
+        })
+        $("button").mouseleave(function(){
+            $(this).css("border","none");
+        })
+        var temp1 = "";
+        var temp2 = "";
+        var flag = false;
+        var a = 0;
+        var b = 0;
+        var result = 0;
+        var operator = "";
+        $("#add, #multiply, #divide, #subtract").click(function(){
+            a = parseFloat(a);
+            b = parseFloat(b);
+            var result = a + b;
+            flag = true;
+            temp1 = "";
+            operator = $(this).text();
+            $("#display").text(operator);
+            $(".formulaScreen").text($(".formulaScreen").text() + $(this).text());
+            
+        })
+        $(".number").click(function(){
+            if(flag == false){
+                temp1 += $(this).text();
+                a += $(this).text();
+                $(".formulaScreen").text(temp1)
+                $("#display").text(temp1);
+            } else {
+                temp1 += $(this).text();
+                $(".formulaScreen").text($(".formulaScreen").text() + $(this).text())
+                $("#display").text(temp1);
+                b += $(this).text();
+            }
+        })
+        $("#clear").click(function(){
+            $(".formulaScreen").text("");
+            $("#display").text("0");
+            temp1 = "";
+            temp2 = "";
+            flag = false;
+            a = "";
+            b = "";
+            operator = "";
+        })
+        $("#equals").click(function(){
+            a = parseFloat(a);
+            b = parseFloat(b);
+            
+        })
+
+    });
+</script>
+<body>
+        <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+    <div id="app">
+        <div data-reactroot="">
+            <div class="calculator">
+                <div class="formulaScreen"></div>
+                <div id="display" class="outputScreen">0</div>
+                <div><button id="clear" value="AC" class="jumbo" style="background: rgb(172, 57, 57);">AC</button><button
+                        id="divide" value="/" style="background: rgb(102, 102, 102);">/</button><button id="multiply"
+                        value="x" style="background: rgb(102, 102, 102);">x</button><button id="seven" class="number" value="7">7</button><button
+                        id="eight" class="number" value="8">8</button><button id="nine" class="number" value="9">9</button><button id="subtract"
+                        value="‑" style="background: rgb(102, 102, 102);">-</button><button id="four" class="number" value="4">4</button><button
+                        id="five" class="number" value="5">5</button><button id="six" class="number" value="6">6</button><button id="add" value="+"
+                        style="background: rgb(102, 102, 102);">+</button><button id="one" class="number" value="1">1</button><button
+                        id="two" class="number" value="2">2</button><button id="three" class="number" value="3">3</button><button id="zero" value="0"
+                        class="jumbo number">0</button><button id="decimal" class="number" value=".">.</button><button id="equals" value="="
+                        style="background: rgb(0, 68, 102); position: absolute; height: 130px; bottom: 5px;">=</button></div>
+            </div>
+            <div class="author">
+                Designed and Coded By
+                <br><a target="_blank" href="https://www.facebook.com/hoan.phi.79">Phi Xuan Hoan</a></div>
+        </div>
+    </div>
+</body>
+
+</html>
