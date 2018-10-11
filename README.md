@@ -1,2 +1,3 @@
 # freeCodeCamp
-done project1 + project2
+done project1 + project2 
+java script caculator
