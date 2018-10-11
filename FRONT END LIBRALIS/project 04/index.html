@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="jquery-1.10.0.min.js"></script>
+</head>
+<style>
+    @import 'https://fonts.googleapis.com/css?family=Share+Tech+Mono';
+    @font-face {
+        font-family: "Digital";
+        src: url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.eot");
+        src: url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.woff") format("woff"), url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.svg#Digital-7") format("svg");
+    }
+
+    body {
+        background: #c2c2d6;
+        -webkit-touch-callout: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+        cursor: default;
+        display: block;
+        margin: 8px;
+
+    }
+
+    #app {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .calculator {
+        border: 2px solid #47476b;
+        padding: 5px;
+        background: black;
+        width: 320px;
+        position: relative;
+    }
+
+    .formulaScreen {
+        min-height: 20px;
+        font-family: digital;
+        font-size: 20px;
+        color: orange;
+        text-align: right;
+        vertical-align: text-top;
+        line-height: 20px;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+    }
+
+    .outputScreen {
+        font-size: 29px;
+        font-family: digital;
+        color: white;
+        text-align: right;
+        line-height: 35px;
+    }
+
+    .jumbo {
+        width: 160px;
+    }
+
+    button {
+        position: relative;
+        height: 65px;
+        width: 80px;
+        color: white;
+        outline: 1px solid black;
+        border: none;
+        background: #4d4d4d;
+        font-family: Share Tech Mono, monospace;
+        font-size: 20px;
+        cursor: default;
+    }
+
+    .author {
+        text-align: center;
+        font-family: Share Tech Mono, sans;
+        margin-top: 15px;
+    }
+
+    .author a {
+        text-decoration: none;
+        color: #00264d;
+        line-height: 26px;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+
+        $("button").mouseenter(function () {
+            $(this).css({
+                "border-color": "while",
+                "border-width": "1px",
+                "border-style": "groove"
+            });
+        })
+        $("button").mouseleave(function () {
+            $(this).css("border", "none");
+        })
+
+        var current = '';
+        var equation = [''];
+        var cal = [''];
+        var value = null;
+        // reset
+        function reset() {
+            $('#display').text("0");
+            $('.formulaScreen').text('');
+            current = '';
+            equation = [''];
+            cal = [''];
+            value = null;
+        }
+        // click numbers
+        $('.number').on('click', function () {
+
+            if (value !== null) {
+                reset();
+            }
+            if (current.length == 20 || equation.join('').length > 30) {
+                reset();
+                $('#display').text('Digit Limit Met');
+            } else {
+                var num = $(this).attr('value');
+                // alert(num);
+                if (!(num === '0' && current === '')) {
+                    if ((num === '.') && (current === '')) {
+                        current = '0';
+                        equation[equation.length - 1] = '0';
+                        cal[equation.length - 1] = '0';
+                    }
+                    if (!(num == '.' && current.indexOf('.') != -1)) {
+                        current += num;
+                        equation[equation.length - 1] += num;
+                        cal[cal.length - 1] += num;
+                        $('.formulaScreen').text(current);
+                        $('#display').text(equation.join(''));
+                    }
+                }
+            }
+        });
+
+        //Typing AC
+        $('#clear').on('click', function () {
+            // alert("AC");
+            reset();
+        });
+
+
+
+        //Typing operators
+        $('.opeator').on('click', function () {
+            if (value !== null) {
+                current = value.toString();
+                equation = [current];
+                cal = [current];
+                value = null;
+            }
+            if ((equation.length % 2 == 1)) {
+
+                var operator = $(this).text();
+                var operation = $(this).attr('value');
+                // alert(operator);
+                current = '';
+                equation.push(operator);
+                cal.push(operation);
+                if (equation.join('').length > 30) {
+                    reset();
+                    $('#display').text('Digit Limit Met');
+                } else {
+                    $('.formulaScreen').text(operator);
+                    $('#display').text(equation.join(''));
+                    equation.push('');
+                    cal.push('');
+                }
+            }
+        });
+
+        // Typing equal
+        $('#equals').on('click', function () {
+            // alert("=");
+            if (current !== '') {
+                value = calculation();
+                if (value == Infinity) {
+                    value = '\u221E';
+                } else if (value == -Infinity) {
+                    value = '-' + '\u221E';
+                }
+                var eText = equation.join('') + '=' + value;
+                if (value.toString().length > 20 || eText.length > 30) {
+                    reset();
+                    $('.formulaScreen').text('Digit Limit Met');
+                } else {
+                    $('.formulaScreen').text(eText);
+                    $('#display').text(value);
+                }
+            }
+        });
+
+        // helper method for calculation
+        function calculation() {
+            var countOp = 0;
+            var flag = true;
+            var s = cal.join('');
+            for (var i = 0; i < s.length; i++) {
+                if ((s[i] == "+" || s[i] == "*" || s[i] == "/" || s[i] == "-") && (s[i + 1] == "+" || s[i + 1] == "*" || s[i + 1] == "/" || s[i + 1] == "-")) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag == false) {
+                var op;
+                var right = "";
+                for (var i = s.length - 1; i >= 0; i--) {
+                    if (s[i] == "+" || s[i] == "*" || s[i] == "/" || s[i] == "-") {
+                        op = s[i];
+                        break;
+                    }
+                    right += s[i];
+                }
+                right = right.split("").reverse().join("");
+                var left = "";
+                for (var i = 0; i < s.length; i++) {
+                    if (s[i] == "+" || s[i] == "*" || s[i] == "/" || s[i] == "-") {
+                        break;
+                    }
+                    left += s[i];
+                }
+                s = left + op + right;
+            }
+            var result = eval(s);
+            if (result % 1 == 0) {
+                return result;
+            }
+            return result;
+        }
+
+    });
+</script>
+
+<body>
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+    <div id="app">
+        <div data-reactroot="">
+            <div class="calculator">
+                <div class="formulaScreen"></div>
+                <div id="display" class="outputScreen">0</div>
+                <div><button id="clear" value="AC" class="jumbo" style="background: rgb(172, 57, 57);">AC</button><button
+                        id="divide" class="opeator" value="/" style="background: rgb(102, 102, 102);">/</button><button
+                        id="multiply" class="opeator" value="*" style="background: rgb(102, 102, 102);">x</button><button
+                        id="seven" class="number" value="7">7</button><button id="eight" class="number" value="8">8</button><button
+                        id="nine" class="number" value="9">9</button><button id="subtract" class="opeator" value="-"
+                        style="background: rgb(102, 102, 102);">-</button><button id="four" class="number" value="4">4</button><button
+                        id="five" class="number" value="5">5</button><button id="six" class="number" value="6">6</button><button
+                        id="add" class="opeator" value="+" style="background: rgb(102, 102, 102);">+</button><button id="one"
+                        class="number" value="1">1</button><button id="two" class="number" value="2">2</button><button
+                        id="three" class="number" value="3">3</button><button id="zero" value="0" class="jumbo number">0</button><button
+                        id="decimal" class="number" value=".">.</button><button id="equals" value="=" style="background: rgb(0, 68, 102); position: absolute; height: 130px; bottom: 5px;">=</button></div>
+            </div>
+            <div class="author">
+                Designed and Coded By
+                <br><a target="_blank" href="https://www.facebook.com/hoan.phi.79">Phi Xuan Hoan</a></div>
+        </div>
+    </div>
+</body>
+
+</html>

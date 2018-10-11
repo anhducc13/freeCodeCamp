@@ -1,0 +1,292 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="jquery-1.10.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<style>
+    @font-face {
+        font-family: "Digital";
+        src: url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.eot");
+        src: url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.woff") format("woff"), url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.svg#Digital-7") format("svg");
+    }
+
+    body {
+        background: #1E555C;
+        color: white;
+        font-size: 30px;
+        text-align: center;
+        font-family: 'Righteous';
+    }
+
+    body #container {
+        display: flex;
+        height: 100vh;
+        justify-content: center;
+        align-items: center;
+    }
+
+    body #container .main-title {
+        font-size: 50px;
+        margin-bottom: 20px;
+    }
+
+    body #container .btn-level,
+    body #container .length-control {
+        display: inline-block;
+    }
+
+    .fa-2x {
+        font-size: 2em;
+    }
+
+    body #container .timer {
+        border: 7px solid #13353a;
+        margin: 20px auto 10px auto;
+        width: 270px;
+        height: 160px;
+        border-radius: 50px;
+        position: relative;
+    }
+
+    body #container .timer .timer-wrapper {
+        position: absolute;
+        width: 190px;
+        height: 110px;
+        left: 50%;
+        top: 50%;
+        margin-left: -95px;
+        margin-top: -57px;
+    }
+
+    body #container .timer #time-left {
+        font-family: digital;
+        font-size: 80px;
+    }
+
+    body #container button {
+        background: none;
+        outline: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+    }
+
+    .author {
+        text-align: center;
+        font-family: Share Tech Mono, sans;
+        margin-top: 15px;
+        font-size: 14px;
+        color: #a50d0d;
+    }
+
+    .author a {
+        text-decoration: none;
+        color: #00264d;
+        line-height: 26px;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        var Session = 25;
+        var Break = 5;
+        var TimeLeft = 25;
+        var TimeRight = 0;
+        var TimeLeftBreak;
+        var TimeRightBreak;
+        var timerSestion;
+        var timerBreak;
+        var audioplayer = document.getElementById("beep");
+        function setTimeView(TimeLeft = 25, TimeRight = 0) {
+            var left = "";
+            var right = "";
+            if (TimeLeft < 10) {
+                left = "0" + TimeLeft;
+            } else {
+                left = TimeLeft;
+            }
+            if (TimeRight < 10) {
+                right = "0" + TimeRight;
+            } else {
+                right = TimeRight;
+            }
+            $("#time-left").text(left + ":" + right)
+        }
+        // click giam
+        $('#session-decrement').on('click', function () {
+            countClick = 1;
+            if (Session > 1) {
+                Session -= 1;
+                TimeLeft -= 1;
+                TimeRight = 0;
+                $("#session-length").text(TimeLeft);
+                setTimeView(TimeLeft, TimeRight);
+            }
+        });
+        // click tang
+        $('#session-increment').on('click', function () {
+            countClick = 1;
+            if (Session < 60) {
+                Session += 1;
+                TimeLeft += 1;
+                TimeRight = 0;
+                $("#session-length").text(TimeLeft);
+                setTimeView(TimeLeft, TimeRight);
+            }
+        });
+        $("#break-decrement").on('click', function () {
+            countClick = 1;
+            if (Break > 1) {
+                Break -= 1;
+                $("#break-length").text(Break);
+            }
+
+        });
+        $('#break-increment').on('click', function () {
+            countClick = 1;
+            if (Break < 60) {
+                Break += 1;
+                $("#break-length").text(Break);
+            }
+
+        });
+        var timeIsRunning = 0;
+        var countClick = 1;
+        $("#start_stop").on('click', function () {
+            if (document.getElementById("beep").play()) {
+                audioplayer.pause();
+            }
+            if (countClick == 1) {
+                timeIsRunning = 1;
+                Session = parseInt($("#session-length").text());
+                Break = parseInt($("#break-length").text());
+                playSessionTime(Session, 0);
+                countClick = 2;
+            } else if (countClick == 2) {
+                clearInterval(timerSestion);
+                clearInterval(timerBreak);
+                //timeIsRunning = 0;
+                countClick = 3;
+            } else if (countClick == 3) {
+                if (timeIsRunning == 1) {
+                    playSessionTime(TimeLeft, TimeRight);
+                } else if (timeIsRunning == 2) {
+                    playBreakTime(TimeLeftBreak, TimeRightBreak);
+                }
+                countClick = 2;
+            }
+
+        })
+        function playSessionTime(timeleft, timeright) {
+            $("#timer-label").text("Session");
+            timeIsRunning = 1;
+            TimeLeft = timeleft;
+            TimeRight = timeright;
+            timerSestion = setInterval(function () {
+                if (TimeLeft == 0 && TimeRight == 0) {
+                    if (audioplayer.paused) {
+                        audioplayer.play();
+                    }
+                    clearInterval(timerSestion);
+                    playBreakTime(Break, 0);
+                } else {
+                    if (TimeRight == 0) {
+
+                        TimeLeft -= 1;
+                        TimeRight = 59;
+                    } else {
+                        TimeRight -= 1;
+                    }
+                    setTimeView(TimeLeft, TimeRight);
+                }
+
+            }, 1000)
+        }
+        function playBreakTime(timeleft, timeright) {
+            $("#timer-label").text("Break");
+            timeIsRunning = 2;
+            TimeLeftBreak = timeleft;
+            TimeRightBreak = timeright;
+            setTimeView(TimeLeftBreak, TimeRightBreak);
+            timerBreak = setInterval(function () {
+                if (TimeLeftBreak == 0 && TimeRightBreak == 0) {
+                    if (audioplayer.paused) {
+                        audioplayer.play();
+                    }
+                    clearInterval(timerBreak);
+                    playSessionTime(Session, 0);
+                } else {
+                    if (TimeRightBreak == 0) {
+                        TimeLeftBreak -= 1;
+                        TimeRightBreak = 59;
+                    } else {
+                        TimeRightBreak -= 1;
+                    }
+                    setTimeView(TimeLeftBreak, TimeRightBreak);
+                }
+
+            }, 1000)
+        }
+        $("#reset").on('click', function () {
+            if (document.getElementById("beep").play()) {
+                audioplayer.pause();
+                document.getElementById("beep").currentTime = 0;
+            }
+            Session = 25;
+            Break = 5;
+            TimeLeft = 25;
+            TimeRight = 0;
+            timeIsRunning = 0;
+            countClick = 1;
+            $("#timer-label").text("Session");
+            $("#time-left").text("25:00")
+            $("#session-length").text("25");
+            $("#break-length").text("5");
+            clearInterval(timerSestion);
+            clearInterval(timerBreak);
+        })
+
+
+    })
+
+</script>
+
+<body>
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+    <div id="container">
+        <div id="app">
+            <div data-reactroot="">
+                <div class="main-title">Pomodoro Clock</div>
+                <div class="length-control">
+                    <div id="break-label">Break Length</div><button id="break-decrement" class="btn-level" value="-"><i
+                            class="fa fa-arrow-down fa-2x"></i></button>
+                    <div id="break-length" class="btn-level">5</div><button id="break-increment" class="btn-level"
+                        value="+"><i class="fa fa-arrow-up fa-2x"></i></button>
+                </div>
+                <div class="length-control">
+                    <div id="session-label">Session Length</div><button id="session-decrement" class="btn-level" value="-"><i
+                            class="fa fa-arrow-down fa-2x"></i></button>
+                    <div id="session-length" class="btn-level">25</div><button id="session-increment" class="btn-level"
+                        value="+"><i class="fa fa-arrow-up fa-2x"></i></button>
+                </div>
+                <div class="timer" style="color: white;">
+                    <div class="timer-wrapper">
+                        <div id="timer-label">Session</div>
+                        <div id="time-left">25:00</div>
+                    </div>
+                </div>
+                <div class="timer-control"><button id="start_stop"><i class="fa fa-play fa-2x"></i><i class="fa fa-pause fa-2x"></i></button><button
+                        id="reset"><i class="fa fa-refresh fa-2x"></i></button></div>
+                <div class="author">
+                    Designed and Coded by
+                    <br><a target="_blank" href="https://www.facebook.com/hoan.phi.79">Phi XuanHoan</a>
+                    <audio id="beep"  src="https://goo.gl/65cBl1"></audio>
+                </div>
+            </div>
+</body>
+
+</html>

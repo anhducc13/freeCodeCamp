@@ -6,160 +6,255 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link href='https://fonts.googleapis.com/css?family=Lato:300,400,400italic,700,700italic' rel='stylesheet'>
     <script src="jquery-1.10.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <style>
+    @import url('https://fonts.googleapis.com/css?family=Russo+One');
     body {
-        background: #c2c2d6;
-        -webkit-touch-callout: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        -webkit-user-select: none;
         user-select: none;
-        cursor: default;
+        background-color: #8d8d8d;
+        font-family: Russo One;
         display: block;
         margin: 8px;
-        
     }
-    #app {
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .calculator {
-        border: 2px solid #47476b;
-        padding: 5px;
-        background: black;
-        width: 320px;
-        position: relative;
-    }
-    .formulaScreen {
-        min-height: 20px;
-        font-family: digital;
-        font-size: 20px;
-        color: orange;
-        text-align: right;
-        vertical-align: text-top;
-        line-height: 20px;
-        overflow-wrap: break-word;
-        word-wrap: break-word;
-    }
-    .outputScreen {
-        font-size: 29px;
-        font-family: 'digital';
-        color: white;
-        text-align: right;
-        line-height: 35px;
-    }
-    .jumbo {
-        width: 160px;
-    }
-    button {
-        position: relative;
-        height: 65px;
-        width: 80px;
-        color: white;
-        outline: 1px solid black;
-        border: none;
-        background: #4d4d4d;
-        font-family: Share Tech Mono, monospace;
-        font-size: 20px;
-        cursor: default;
-    }
-    .author {
-        text-align: center;
-        font-family: Share Tech Mono, sans;
-        margin-top: 15px;
-    }
-    .author a {
-        text-decoration: none;
-        color: #00264d;
-        line-height: 26px;
-    }
+    #root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.inner-container {
+    outline: 5px solid orange;
+    position: relative;
+    width: 660px;
+    text-align: center;
+    background-color: #b3b3b3;
+}
+.inner-container .pad-bank {
+    width: 332px;
+    height: 272px;
+    display: inline-block;
+    margin: 20px;
+}
+.inner-container .logo {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+.inner-container .controls-container {
+    width: 240px;
+    height: 272px;
+    display: inline-block;
+    margin: 40px 20px 0 10px;
+    vertical-align: top;
+}
+.inner-container .pad-bank .drum-pad {
+    position: relative;
+    float: left;
+    width: 100px;
+    height: 80px;
+    margin-right: 10px;
+    border-radius: 5px;
+    padding-top: 35px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.inner-container .logo .inner-logo {
+    display: inline-block;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 20px;
+}
+.inner-container .controls-container {
+    width: 240px;
+    height: 272px;
+    display: inline-block;
+    margin: 40px 20px 0 10px;
+    vertical-align: top;
+}
+.inner-container .controls-container .control {
+    width: 100px;
+    margin: auto;
+}
+.outer-select, .inner-container .controls-container .control .select {
+    margin: auto;
+    border: 1px solid black;
+    width: 50px;
+    height: 20px;
+    padding: 1px;
+    background-color: black;
+}
+.inner-select, .inner-container .controls-container .control .select .inner {
+    width: 23px;
+    height: 19px;
+    background: blue;
+    border: 1px solid black;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.inner-container .controls-container #display {
+    width: 200px;
+    background-color: gray;
+    margin: 15px auto;
+    padding: 15px;
+    box-sizing: border-box;
+}
 </style>
 <script>
-    $(document).ready(function(){
-        $("button").mouseenter(function(){
-            $(this).css({"border-color": "while", 
-                        "border-width":"1px",
-                        "border-style":"groove"});
+    var block1 = new Array('123213',
+        'https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3',
+        'https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3',
+        'https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3',
+        'https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3',
+        'https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3',
+        'https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3',
+        'https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3',
+        'https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3',
+        'https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3'
+    );
+
+    var block2 = new Array('12313',
+        'https://s3.amazonaws.com/freecodecamp/drums/Chord_1.mp3',
+        'https://s3.amazonaws.com/freecodecamp/drums/Chord_2.mp3',
+        'https://s3.amazonaws.com/freecodecamp/drums/Chord_3.mp3',
+        'https://s3.amazonaws.com/freecodecamp/drums/Give_us_a_light.mp3',
+        'https://s3.amazonaws.com/freecodecamp/drums/Dry_Ohh.mp3',
+        'https://s3.amazonaws.com/freecodecamp/drums/Bld_H1.mp3',
+        'https://s3.amazonaws.com/freecodecamp/drums/punchy_kick_1.mp3',
+        'https://s3.amazonaws.com/freecodecamp/drums/side_stick_1.mp3',
+        'https://s3.amazonaws.com/freecodecamp/drums/Brk_Snr.mp3'
+    );
+    $(document).ready(function () {
+        var padBank = $("#hoan");
+        var dem = 0;
+        for (var i = 0; i < 10; i++) {
+            $("#hoan :nth-child(" + i + ")").children().attr('src', block1[i]);
+
+        }
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        var count = 1;
+        $("#power").on('click', function () {
+            // alert("2");
+            if (count == 1) {
+                $(this).css('float', 'left');
+                count = 2;
+            } else if (count == 2) {
+                $(this).css('float', 'right');
+                count = 1;
+            }
+
         })
-        $("button").mouseleave(function(){
-            $(this).css("border","none");
-        })
-        var temp1 = "";
-        var temp2 = "";
-        var flag = false;
-        var a = 0;
-        var b = 0;
-        var result = 0;
-        var operator = "";
-        $("#add, #multiply, #divide, #subtract").click(function(){
-            a = parseFloat(a);
-            b = parseFloat(b);
-            var result = a + b;
-            flag = true;
-            temp1 = "";
-            operator = $(this).text();
-            $("#display").text(operator);
-            $(".formulaScreen").text($(".formulaScreen").text() + $(this).text());
-            
-        })
-        $(".number").click(function(){
-            if(flag == false){
-                temp1 += $(this).text();
-                a += $(this).text();
-                $(".formulaScreen").text(temp1)
-                $("#display").text(temp1);
-            } else {
-                temp1 += $(this).text();
-                $(".formulaScreen").text($(".formulaScreen").text() + $(this).text())
-                $("#display").text(temp1);
-                b += $(this).text();
+        var bank = 1;
+        $("#bank").on('click', function () {
+            if (bank == 1) {
+                $("#display").text("Smooth Piano Kit");
+                for (var i = 0; i < 10; i++) {
+                    $("#hoan :nth-child(" + i + ")").children().attr('src', block2[i]);
+
+                }
+                $(this).css('float', 'right');
+                bank = 2;
+            } else if (bank == 2) {
+                $("#display").text("Heater Kit");
+                for (var i = 0; i < 10; i++) {
+                    $("#hoan :nth-child(" + i + ")").children().attr('src', block1[i]);
+
+                }
+                $(this).css('float', 'left');
+                bank = 1;
             }
         })
-        $("#clear").click(function(){
-            $(".formulaScreen").text("");
-            $("#display").text("0");
-            temp1 = "";
-            temp2 = "";
-            flag = false;
-            a = "";
-            b = "";
-            operator = "";
-        })
-        $("#equals").click(function(){
-            a = parseFloat(a);
-            b = parseFloat(b);
-            
+        $(".drum-pad").on('click', function () {
+            if (count == 1) {
+                $(this).css('background-color', '#FFA500');
+                var id = $(this).attr('id');
+                var audioplay = document.getElementById(id).children[0];
+                $("#display").text($(this).attr('id'));
+                if (audioplay.paused) {
+                    audioplay.play();
+                }
+                sleep(100).then(() => {
+                    $(this).css('background-color', '#808080');
+                });
+            }
+        });
+        $(document).keydown(function (e) {
+            var key = e.key;
+            var id = key.toUpperCase();
+            var audioplay = document.getElementById(id)
+            $("#display").text($("#" + id).parent().attr('id'));
+            if (audioplay.paused) {
+                audioplay.play();
+            }
         })
 
-    });
+    })
 </script>
+
 <body>
-        <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
-    <div id="app">
-        <div data-reactroot="">
-            <div class="calculator">
-                <div class="formulaScreen"></div>
-                <div id="display" class="outputScreen">0</div>
-                <div><button id="clear" value="AC" class="jumbo" style="background: rgb(172, 57, 57);">AC</button><button
-                        id="divide" value="/" style="background: rgb(102, 102, 102);">/</button><button id="multiply"
-                        value="x" style="background: rgb(102, 102, 102);">x</button><button id="seven" class="number" value="7">7</button><button
-                        id="eight" class="number" value="8">8</button><button id="nine" class="number" value="9">9</button><button id="subtract"
-                        value="‑" style="background: rgb(102, 102, 102);">-</button><button id="four" class="number" value="4">4</button><button
-                        id="five" class="number" value="5">5</button><button id="six" class="number" value="6">6</button><button id="add" value="+"
-                        style="background: rgb(102, 102, 102);">+</button><button id="one" class="number" value="1">1</button><button
-                        id="two" class="number" value="2">2</button><button id="three" class="number" value="3">3</button><button id="zero" value="0"
-                        class="jumbo number">0</button><button id="decimal" class="number" value=".">.</button><button id="equals" value="="
-                        style="background: rgb(0, 68, 102); position: absolute; height: 130px; bottom: 5px;">=</button></div>
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+    <div id="root">
+        <div data-reactroot="" id="drum-machine" class="inner-container">
+            <div class="pad-bank" id="hoan">
+                <div id="Heater-1" class="drum-pad" style="background-color: grey; margin-top: 10px; box-shadow: black 3px 3px 5px;">
+                    <audio class="clip" id="Q" src=""></audio><!-- react-text: 5 -->Q
+                    <!-- /react-text -->
+                </div>
+                <div id="Heater-2" class="drum-pad" style="background-color: grey; margin-top: 10px; box-shadow: black 3px 3px 5px;">
+                    <audio class="clip" id="W" src=""></audio><!-- react-text: 8 -->W
+                    <!-- /react-text -->
+                </div>
+                <div id="Heater-3" class="drum-pad" style="background-color: grey; margin-top: 10px; box-shadow: black 3px 3px 5px;">
+                    <audio class="clip" id="E" src=""></audio><!-- react-text: 11 -->E
+                    <!-- /react-text -->
+                </div>
+                <div id="Heater-4" class="drum-pad" style="background-color: grey; margin-top: 10px; box-shadow: black 3px 3px 5px;">
+                    <audio class="clip" id="A" src=""></audio><!-- react-text: 14 -->A
+                    <!-- /react-text -->
+                </div>
+                <div id="Clap" class="drum-pad" style="background-color: grey; margin-top: 10px; box-shadow: black 3px 3px 5px;">
+                    <audio class="clip" id="S" src=""></audio><!-- react-text: 17 -->S
+                    <!-- /react-text -->
+                </div>
+                <div id="Open-HH" class="drum-pad" style="background-color: grey; margin-top: 10px; box-shadow: black 3px 3px 5px;">
+                    <audio class="clip" id="D" src=""></audio><!-- react-text: 20 -->D
+                    <!-- /react-text -->
+                </div>
+                <div id="Kick-n'-Hat" class="drum-pad" style="background-color: grey; margin-top: 10px; box-shadow: black 3px 3px 5px;">
+                    <audio class="clip" id="Z" src=""></audio><!-- react-text: 23 -->Z
+                    <!-- /react-text -->
+                </div>
+                <div id="Kick" class="drum-pad" style="background-color: grey; margin-top: 10px; box-shadow: black 3px 3px 5px;">
+                    <audio class="clip" id="X" src=""></audio><!-- react-text: 26 -->X
+                    <!-- /react-text -->
+                </div>
+                <div id="Closed-HH" class="drum-pad" style="background-color: grey; margin-top: 10px; box-shadow: black 3px 3px 5px;">
+                    <audio class="clip" id="C" src=""></audio><!-- react-text: 29 -->C
+                    <!-- /react-text -->
+                </div>
             </div>
-            <div class="author">
-                Designed and Coded By
-                <br><a target="_blank" href="https://www.facebook.com/hoan.phi.79">Phi Xuan Hoan</a></div>
+            <div class="logo">
+                <div class="inner-logo ">FCC&nbsp;</div><i class="inner-logo fa fa-free-code-camp"></i>
+            </div>
+            <div class="controls-container">
+                <div class="control">
+                    <p>Power</p>
+                    <div class="select">
+                        <div class="inner" id="power" style="float: right;"></div>
+                    </div>
+                </div>
+                <p id="display">&nbsp;</p>
+                <div class="volume-slider"><input type="range" step="0.01" min="0" max="1" value="0.3"></div>
+                <div class="control">
+                    <p>Bank</p>
+                    <div class="select">
+                        <div id="bank" class="inner" style="float: left;"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
