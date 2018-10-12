@@ -18,7 +18,8 @@
   + project 3
   + project 4
   + project 5
+  => Học react js làm lại 5 project bằng react 
 - Data Visualization
 ## BackEnd
-- NODE JS
+- Node JS
 
