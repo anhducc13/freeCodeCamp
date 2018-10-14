@@ -21,5 +21,7 @@
   => Học react js làm lại 5 project bằng react 
 - Data Visualization
 ## BackEnd
+- API D3
 - Node JS
+
 
